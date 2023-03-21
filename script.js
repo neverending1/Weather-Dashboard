@@ -150,4 +150,36 @@ function searchWeather(queryURL) {
         searchWeather(queryURL);
     }
 }
+$('#search-btn').on('click', function (event) {
+      
+    event.preventDefault();
+
+    
+    let city = cityInput.val().trim();
+    city = city.replace(' ', '%20');
+
+    
+    cityInput.val('');
+
+    
+    if (city) {
+        let queryURL = buildURLFromInputs(city);
+        searchWeather(queryURL);
+    }
+}); 
+
+$(document).on("click", "button.city-btn", function (event) {
+    let clickedCity = $(this).text();
+    let foundCity = $.grep(pastCities, function (storedCity) {
+        return clickedCity === storedCity.city;
+    })
+    let queryURL = buildURLFromId(foundCity[0].id)
+    searchWeather(queryURL);
+});
+
+loadCities();
+displayCities(pastCities);
+
+displayLastSearchedCity();
+
 });
